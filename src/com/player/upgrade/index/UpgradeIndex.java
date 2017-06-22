@@ -1,18 +1,16 @@
 package com.player.upgrade.index;
 
+import java.util.concurrent.Executors;
+
 public class UpgradeIndex {
 
 	public static void main(String[] args) {
-		// 启动更新程序
-		// Upgrade.getInstance().start();
+		start();
+	}
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				System.err.println("    启动更新程序     ");
-				// 启动更新程序
-				Upgrade.getInstance().start();
-			}
-		}).start();
+	private static void start() {
+		// 启动更新程序
+		UpgradeService aUpgradeService = new UpgradeService();
+		Executors.newSingleThreadExecutor().submit(aUpgradeService);
 	}
 }

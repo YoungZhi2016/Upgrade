@@ -5,6 +5,7 @@ import java.nio.file.CopyOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -153,28 +154,40 @@ public class UpgradePlayerImpl {
 	 * @param deletePackFile
 	 *            true-->delete UpdatePack File
 	 */
-	public void cleanJunkFiles(boolean deletePackFile) {
-		// clean playerUpdatePack
+	public void cleanJunkFiles() {
+		cleanJunkFiles(null);
+	}
+
+	public void cleanJunkFiles(String packFilePath) {
+		// clear playerUpdatePack
 		FileUtil.deleteDir(aUpdatePackPath);
 
-		// clean backup file
+		// clear backup file
 		FileUtil.deleteDir(aBackupPath);
 
-		if (deletePackFile) {
-			// clean playerUpdatePack file DIR
-			int number = 0;
-			System.gc();
-			boolean b = FileUtil.deleteDir(Configs.getUpdatePackFileDirPath());
-			while (!b) {
-				System.gc();
-				b = FileUtil.deleteDir(Configs.getUpdatePackFileDirPath());
-				if (number > 5) {
-					b = true;
+		// clear update pack file
+		if (packFilePath != null) {
+			Path packPath = Paths.get(packFilePath);
+			if (Files.exists(packPath)) {
+				int number = 0;
+				boolean b = false;
+				b = deletePack(b, packPath);
+				while (!b) {
+					b = deletePack(b, packPath);
+					if (number > 5) {
+						b = true;
+					}
+					number++;
 				}
-				number++;
 			}
 		}
 		aWatchIndex.close();
+	}
+
+	private boolean deletePack(boolean b, Path packPath) {
+		System.gc();
+		b = FileUtil.deleteDir(packPath);
+		return b;
 	}
 
 	private static final class UpgradeHolder {

@@ -3,6 +3,7 @@ package com.player.upgrade.utils;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -28,6 +29,20 @@ public final class JsonUtil {
 	 */
 	public static ArrayNode getArrayNode() {
 		return MAPPER.createArrayNode();
+	}
+
+	/**
+	 * @return get JSon String by aObject
+	 */
+	public static String getStringByObject(Object aObject) throws JsonProcessingException {
+		return MAPPER.writeValueAsString(aObject);
+	}
+
+	/**
+	 * get Object by JSON String
+	 */
+	public static <T> T getObjectByString(String json, Class<T> valueType) throws Exception {
+		return MAPPER.readValue(json, valueType);
 	}
 
 	/**

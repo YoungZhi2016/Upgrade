@@ -6,20 +6,4 @@ public class Player {
 		return "20170621";
 	}
 
-	/**
-	 * close player
-	 */
-	public static boolean closePlayer() {
-
-		return true;
-	}
-
-	/**
-	 * restart player
-	 */
-	public static boolean restartPlayer() {
-
-		return true;
-	}
-
 }

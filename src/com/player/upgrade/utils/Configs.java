@@ -13,7 +13,9 @@ import java.util.StringTokenizer;
  */
 public class Configs {
 
-	private static ConfigUtil aConfigUtil = new ConfigUtil();
+	private static ConfigUtil aApllicationConfig = new ConfigUtil();
+	private static ConfigUtil aConfigPlayer = new ConfigUtil("akka.player.conf");
+	private static ConfigUtil aConfigUpgrade = new ConfigUtil("akka.upgrade.conf");
 
 	/**
 	 * ManifestFile DIR path
@@ -40,7 +42,7 @@ public class Configs {
 	 * @return backup directory or file
 	 */
 	public static Set<String> getBackupDirFile() {
-		String back = aConfigUtil.getString("backup_dir_file", null);
+		String back = aApllicationConfig.getString("backup_dir_file", null);
 		Set<String> set = null;
 		if (back != null) {
 			set = new HashSet<>();
@@ -56,7 +58,7 @@ public class Configs {
 	 * Player DIR String
 	 */
 	public static String getPlayerDirString() {
-		return aConfigUtil.getString("player_path", ConfigUtil.getRootPath());
+		return aApllicationConfig.getString("player_path", ConfigUtil.getRootPath());
 	}
 
 	/**
@@ -87,22 +89,40 @@ public class Configs {
 		return getPlayerParentDirPath().resolve("playerUpdatePackUnZip");
 	}
 
-	/**
-	 * @return update pack file DIR
-	 */
-	public static Path getUpdatePackFileDirPath() {
-		return getPlayerParentDirPath().resolve("playerUpdatePack");
+	// /**
+	// * @return update pack file DIR
+	// */
+	// public static Path getUpdatePackFileDirPath() {
+	// return getPlayerParentDirPath().resolve("playerUpdatePack");
+	// }
+	//
+	// /**
+	// * @return update pack file name
+	// */
+	// public static Path getUpdatePackFilePath() {
+	// return getUpdatePackFileDirPath().resolve(getPackName());
+	// }
+	//
+	// public static String getPackName() {
+	// return "playerUpdatePack.zip";
+	// }
+
+	/*----------------------------------AKKA-Configuration-----------------------------------------------------------*/
+
+	public static int getUpgradeAkkaPort() {
+		return aConfigUpgrade.getInt("akka.remote.netty.tcp.port", 6002);
 	}
 
-	/**
-	 * @return update pack file name
-	 */
-	public static Path getUpdatePackFilePath() {
-		return getUpdatePackFileDirPath().resolve(getPackName());
+	public static String getUpgradeAkkaIp() {
+		return aConfigUpgrade.getString("akka.remote.netty.tcp.hostname", "127.0.0.1");
 	}
 
-	public static String getPackName() {
-		return "playerUpdatePack.zip";
+	public static int getPlayerAkkaPort() {
+		return aConfigPlayer.getInt("akka.remote.netty.tcp.port", 6000);
+	}
+
+	public static String getPlayerAkkaIp() {
+		return aConfigPlayer.getString("akka.remote.netty.tcp.hostname", "127.0.0.1");
 	}
 
 }

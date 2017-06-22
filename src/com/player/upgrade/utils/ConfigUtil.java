@@ -1,32 +1,26 @@
 package com.player.upgrade.utils;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 public class ConfigUtil {
 
 	private final static String ROOT_PATH;
 
-	private final static Properties PROPERTIES;
+	private Config aConfig;
 
 	static {
 		ROOT_PATH = new File("").getAbsolutePath();
-
-		PROPERTIES = new Properties();
-		InputStream in;
-		try {
-			in = new BufferedInputStream(new FileInputStream(ROOT_PATH + "/config/application.conf"));
-			PROPERTIES.load(in);
-		} catch (IOException e) {
-			Logs.error("config file init failure!" + e.getMessage());
-		}
 	}
 
 	public ConfigUtil() {
+		this("application.conf");
+	}
+
+	public ConfigUtil(String fileName) {
+		aConfig = ConfigFactory.parseFile(new File(getRootPath() + "/config/" + fileName));
 	}
 
 	public static String getRootPath() {
@@ -84,7 +78,7 @@ public class ConfigUtil {
 	private String getString(String val) {
 		String str = null;
 		try {
-			str = PROPERTIES.getProperty(val);
+			str = aConfig.getString(val);
 		} catch (Exception e) {
 			Logs.error("undefined key: " + val + "---" + e.getMessage());
 		}

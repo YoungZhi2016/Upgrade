@@ -33,20 +33,15 @@ public final class ManifestInfo {
 		return manifestNode.has("version") ? manifestNode.findValue("version").asText() : null;
 	}
 
-	public String getServerIP() {
-		String url = getDownLoadUrl();
-		if (url != null) {
-			return url.substring(url.indexOf("//") + 2, url.lastIndexOf(':'));
-		}
-		return "1";
-	}
-
-	public String getDownLoadUrl() {
-		return manifestNode.has("url") ? manifestNode.findValue("url").asText() : null;
-	}
-
 	public String getMD5() {
 		return manifestNode.has("md5") ? manifestNode.findValue("md5").asText() : null;
+	}
+
+	/**
+	 * update pack file path
+	 */
+	public String getUpdatePackPath() {
+		return manifestNode.has("packPath") ? manifestNode.findValue("packPath").asText() : null;
 	}
 
 	private static class ManifestInfoHolder {
