@@ -1,1 +1,5 @@
 /logs
+.settings
+/ftclist
+.classpath
+.project
