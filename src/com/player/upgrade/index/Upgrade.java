@@ -124,6 +124,7 @@ public class Upgrade {
 
 		aIntent.addValue(aMap);
 
+		AkkaRemoteSystem.init();
 		AkkaRemoteSystem.getRemoteRef(Configs.getPlayerAkkaIp(), Configs.getPlayerAkkaPort()).tell(aIntent,
 				AkkaRemoteSystem.senderActor);
 	}

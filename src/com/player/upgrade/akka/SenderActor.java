@@ -14,7 +14,7 @@ public class SenderActor extends UntypedActor {
 
 	@Override
 	public void onReceive(Object message) throws Throwable {
-		System.out.println("SenderActor onReceive: " + message);
+		System.out.println("upgrade SenderActor onReceive: " + message);
 
 		if (message instanceof Intent) {
 			Intent aIntent = (Intent) message;
@@ -35,7 +35,7 @@ public class SenderActor extends UntypedActor {
 			}
 		}
 
-		getSender().tell("I Got it!", ActorRef.noSender());
+		getSender().tell("I Got it!---", ActorRef.noSender());
 	}
 
 	private void clear(boolean deletePackFile) {

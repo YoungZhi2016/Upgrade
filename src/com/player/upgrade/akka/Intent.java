@@ -1,5 +1,6 @@
 package com.player.upgrade.akka;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,9 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.player.upgrade.utils.JsonUtil;
 
-public class Intent {
+public class Intent implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String action;
 

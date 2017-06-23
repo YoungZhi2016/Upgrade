@@ -21,7 +21,7 @@ public class Configs {
 	 * ManifestFile DIR path
 	 */
 	public static Path getManifestFileDirPath() {
-		return getPlayerDirPath().resolve("upgrade");
+		return getPlayerDirPath().resolve("upgradeManifest");
 	}
 
 	/**
@@ -89,32 +89,30 @@ public class Configs {
 		return getPlayerParentDirPath().resolve("playerUpdatePackUnZip");
 	}
 
-	// /**
-	// * @return update pack file DIR
-	// */
-	// public static Path getUpdatePackFileDirPath() {
-	// return getPlayerParentDirPath().resolve("playerUpdatePack");
-	// }
-	//
-	// /**
-	// * @return update pack file name
-	// */
-	// public static Path getUpdatePackFilePath() {
-	// return getUpdatePackFileDirPath().resolve(getPackName());
-	// }
-	//
-	// public static String getPackName() {
-	// return "playerUpdatePack.zip";
-	// }
-
 	/*----------------------------------AKKA-Configuration-----------------------------------------------------------*/
 
-	public static int getUpgradeAkkaPort() {
-		return aConfigUpgrade.getInt("akka.remote.netty.tcp.port", 6002);
+	private static String getUpgradeString(String key, String defaultValue) {
+		return aConfigUpgrade.getString(key, defaultValue);
+	}
+
+	private static int getUpgradeInt(String key, int defaultValue) {
+		return aConfigUpgrade.getInt(key, defaultValue);
 	}
 
 	public static String getUpgradeAkkaIp() {
-		return aConfigUpgrade.getString("akka.remote.netty.tcp.hostname", "127.0.0.1");
+		return getUpgradeString("akka.remote.netty.tcp.hostname", "127.0.0.1");
+	}
+
+	public static int getUpgradeAkkaPort() {
+		return getUpgradeInt("akka.remote.netty.tcp.port", 6002);
+	}
+
+	public static String getPluginsAkkaIp() {
+		return getUpgradeString("plugins_akka_ip", "127.0.0.1");
+	}
+
+	public static int getPluginsAkkaPort() {
+		return getUpgradeInt("plugins_akka_port", 6001);
 	}
 
 	public static int getPlayerAkkaPort() {

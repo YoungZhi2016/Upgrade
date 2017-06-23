@@ -6,8 +6,8 @@ public class RemoteActor extends UntypedActor {
 
 	@Override
 	public void onReceive(Object message) throws Throwable {
-		System.out.println("RemoteActor onReceive: " + message);
-		getSender().tell("收到消息：", getSelf());
+		System.out.println("upgradeRemoteActor onReceive: " + message);
+		getSender().tell("upgrade收到消息tell you ：", getSelf());
 	}
 
 }
